@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Course</h1>
+
+<div>
+    <input type="text" id="txtName" placeholder="Enter Name" />
+    <input type="number" id="txtDuration" placeholder="Enter Duration" />
+    <input type="button" value="send" onclick="send()" />
+
+    <ul id="u">
+    </ul>
+</div>
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script>
+
+         //define connection
+        con = new signalR.HubConnectionBuilder().withUrl("/course").build();
+
+         //start conn
+         con.start();
+
+
+         //calling service method
+         function send(){
+        var o= { name: $("#txtName").val(), duration: $("#txtDuration").val() };
+            con.invoke("sendcourse",o );
+         }
+    </script>
+
+
+}
+
